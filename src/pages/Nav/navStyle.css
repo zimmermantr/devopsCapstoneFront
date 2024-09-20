@@ -1,0 +1,73 @@
+.Navbar {
+    width: 100%;
+    height: 4rem;
+    background: #1b1919;
+    position: inherit;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.logo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 0;
+    /* padding-bottom: -10px; */
+    /* width: 3.5rem; */
+}
+.logo img {
+    width: 5rem;
+    height: 4rem;
+}
+
+/* */
+.nav-items {
+    display: flex;
+    list-style: none;
+    text-align: center;
+    width: 70%;
+    height: 4.5rem;
+    justify-content: flex-end;
+    margin-top: 12px;
+    margin-right: 2rem;  
+    color: white; /* */
+}
+.nav-item {
+    display: flex;
+    align-items: center;
+    
+}
+.nav-item .link {
+    text-decoration: none;
+    color: white;
+    font-size: 1.1rem;
+    
+    margin-right: 1rem; 
+    margin-left: 1rem; 
+    padding: 6px 16px;
+    border-radius: 5px;
+    transition: 0.3s all ease-out;
+}
+.nav-item a:hover {
+    background: rgba(134, 130, 136, 0.719);   /* rgb(0,212,212) */
+}
+
+
+/* */
+.btn2 {
+    border: none;
+    background: transparent;
+    padding: 4px 16px;
+    font-size: 1.1rem;
+    color: white;
+    background: rgba(199, 118, 246, 0.719);   /* rgb(0,212,212) */
+    border-radius: 5px;
+    transition: 0.2s all ease-out;
+    cursor: pointer;
+}
+.btn2:hover {
+    color: rgb(199, 118, 246);   /* rgb(0,212,212) */
+    background: white;
+}

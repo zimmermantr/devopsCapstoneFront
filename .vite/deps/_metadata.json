@@ -1,0 +1,68 @@
+{
+  "hash": "b5af24aa",
+  "browserHash": "f199ecdf",
+  "optimized": {
+    "react": {
+      "src": "../../node_modules/react/index.js",
+      "file": "react.js",
+      "fileHash": "410f99cc",
+      "needsInterop": true
+    },
+    "react-dom/client": {
+      "src": "../../node_modules/react-dom/client.js",
+      "file": "react-dom_client.js",
+      "fileHash": "beda3565",
+      "needsInterop": true
+    },
+    "react-router-dom": {
+      "src": "../../node_modules/react-router-dom/dist/index.js",
+      "file": "react-router-dom.js",
+      "fileHash": "e099ae01",
+      "needsInterop": false
+    },
+    "styled-components": {
+      "src": "../../node_modules/styled-components/dist/styled-components.browser.esm.js",
+      "file": "styled-components.js",
+      "fileHash": "0d198800",
+      "needsInterop": false
+    },
+    "axios": {
+      "src": "../../node_modules/axios/index.js",
+      "file": "axios.js",
+      "fileHash": "94c14c6d",
+      "needsInterop": false
+    },
+    "react-bootstrap/Dropdown": {
+      "src": "../../node_modules/react-bootstrap/esm/Dropdown.js",
+      "file": "react-bootstrap_Dropdown.js",
+      "fileHash": "36e63bff",
+      "needsInterop": false
+    },
+    "react-bootstrap/DropdownButton": {
+      "src": "../../node_modules/react-bootstrap/esm/DropdownButton.js",
+      "file": "react-bootstrap_DropdownButton.js",
+      "fileHash": "584cfc0c",
+      "needsInterop": false
+    },
+    "react-bootstrap/ProgressBar": {
+      "src": "../../node_modules/react-bootstrap/esm/ProgressBar.js",
+      "file": "react-bootstrap_ProgressBar.js",
+      "fileHash": "2ca0c17d",
+      "needsInterop": false
+    }
+  },
+  "chunks": {
+    "chunk-VOBVWKRX": {
+      "file": "chunk-VOBVWKRX.js"
+    },
+    "chunk-KMSFQP3U": {
+      "file": "chunk-KMSFQP3U.js"
+    },
+    "chunk-ZAUFE7H7": {
+      "file": "chunk-ZAUFE7H7.js"
+    },
+    "chunk-UXIASGQL": {
+      "file": "chunk-UXIASGQL.js"
+    }
+  }
+}

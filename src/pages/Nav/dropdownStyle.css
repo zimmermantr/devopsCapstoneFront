@@ -1,0 +1,93 @@
+.fitness-submenu {
+    /* display:none; */
+    width: 7.5rem;
+    position: absolute;
+    top: 4rem;
+    /* transform: translateX(-1.5rem); */
+    list-style: none;
+    text-align: left;
+    
+}
+
+.fitness-submenu li {
+    background: rgba(134, 130, 136, 0.719);   /* rgb(0,212,212) */
+    cursor: pointer;
+
+}
+.fitness-submenu li a:hover {
+
+    background: rgb(0, 175, 175);
+ 
+}
+
+.fitness-submenu.clicked {
+    display: none;
+    
+}
+
+.submenu-item {
+    display: block;
+    /* width: 100%;
+    height: 100%; */
+    text-decoration: none;
+    text-align: center;
+    color: white;
+    padding: 16px;
+  
+    
+}
+
+
+/* Nutrition */
+.nutrition-submenu {
+    width: 8rem;
+    position: absolute;
+    top: 4rem;
+    /* transform: translateX(-1.5rem); */
+    list-style: none;
+    text-align: start;
+    
+}
+
+.nutrition-submenu li {
+    background: rgba(134, 130, 136, 0.719);    /* rgb(0,212,212) */
+    cursor: pointer;
+
+}
+.nutrition-submenu li a:hover {
+
+    background: rgba(19, 134, 19, 0.893);
+ 
+}
+
+.nutrition-submenu.clicked {
+    display: none;
+    
+}
+
+/* My Plan */
+.user-submenu {
+    width: 7.8rem;
+    position: absolute;
+    top: 4rem;
+    /* transform: translateX(-1.5rem); */
+    list-style: none;
+    text-align: start;
+    
+}
+
+.user-submenu li {
+    background: rgba(134, 130, 136, 0.719);    /* rgb(0,212,212) */
+    cursor: pointer;
+
+}
+.user-submenu li a:hover {
+
+    background: rgba(199, 118, 246, 0.719);   /* rgb(0,175,175) */
+ 
+}
+
+.user-submenu.clicked {
+    display: none;
+    
+}
