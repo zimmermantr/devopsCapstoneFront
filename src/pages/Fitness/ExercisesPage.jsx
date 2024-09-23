@@ -86,9 +86,19 @@ export const ExercisesPage = () => {
 
     const handleSearch = async (e) => {
         e.preventDefault();
+        let url = ''
+        if (equipmentList.includes(searchInput)) {
+          url = `https://exercisedb.p.rapidapi.com/exercises/equipment/${searchInput}`
+        } else if (targetMuscleList.includes(searchInput)) {
+          url = `https://exercisedb.p.rapidapi.com/exercises/target/${searchInput}`
+        } else if (bodyPartsList.includes(searchInput)) {
+          url = `https://exercisedb.p.rapidapi.com/exercises/bodyPart/${searchInput}`
+        } else {
+          url = `https://exercisedb.p.rapidapi.com/exercises/name/${searchInput}`
+        }
         if (searchInput) {
             const exercisesData = await fetchData(
-                'https://exercisedb.p.rapidapi.com/exercises',
+                url,
                 exerciseOptions
             );
             
@@ -282,6 +292,10 @@ export const ExercisesPage = () => {
           },
         ].filter(Boolean);
 
+    useEffect(() => {
+      console.log(searchInput)
+    }, [searchInput])
+
 
     return(
         <div className="h-screen  w-full bg-[#000000]" style={{
@@ -320,6 +334,7 @@ export const ExercisesPage = () => {
               options={groupedOptions}
               isSearchable={true}
               onChange={(selectedOption) => setSearchInput(selectedOption.value)}
+              // onInputChange={(inputValue) => setSearchInput(inputValue.toLowerCase())}
               placeholder="Search "
               styles={{
                 container: (provided) => ({
