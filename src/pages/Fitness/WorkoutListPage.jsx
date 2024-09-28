@@ -14,9 +14,11 @@ export const WorkoutListsPage = () => {
     
     useEffect(()=> {
         validUser();
+        fetchWorkouts();
     }, []);
 
-    const createWorkout = async () => {
+    const createWorkout = async (e) => {
+        e.preventDefault();
         try {
             const token = localStorage.getItem("token");
             if (token) {
