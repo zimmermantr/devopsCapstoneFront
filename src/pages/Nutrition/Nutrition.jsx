@@ -23,12 +23,12 @@ export default function Nutrition(){
     useEffect(()=>{
         const token = localStorage.getItem("token")
         axios.defaults.headers.common["Authorization"] = `Token ${token}`
-        axios.get("http://127.0.0.1:8000/api/v1/nutrition/").then((response)=>{
+        axios.get("/nutrition/").then((response)=>{
             setMealList(response.data)
         }).catch((error)=>{
             console.log(error)
         })
-        axios.get("http://127.0.0.1:8000/api/v1/survey/view/").then((response)=>{
+        axios.get("/survey/view/").then((response)=>{
             setWeight(Math.floor(response.data[0]['weight']/2.205))
             setHeight(Math.floor(response.data[0]['height']*2.54))
             setAge(Math.floor(response.data[0]['age']))
@@ -52,7 +52,7 @@ export default function Nutrition(){
         try{
             const token = localStorage.getItem("token")
             axios.defaults.headers.common["Authorization"] = `Token ${token}`
-            const response = await axios.post("http://127.0.0.1:8000/api/v1/nutrition/1/",{meal})
+            const response = await axios.post("/nutrition/1/",{meal})
         }catch(error){
             console.log(error)
         }
@@ -94,7 +94,7 @@ export default function Nutrition(){
                                         try{
                                             const token = localStorage.getItem("token")
                                             axios.defaults.headers.common["Authorization"] = `Token ${token}`
-                                            const response =  await axios.delete(`http://127.0.0.1:8000/api/v1/nutrition/${mealItem.id}/`)
+                                            const response =  await axios.delete(`/v1/nutrition/${mealItem.id}/`)
                                             console.log(response)
                                         }catch(error){
                                             console.log(error)
@@ -108,7 +108,7 @@ export default function Nutrition(){
                                         try{
                                             const token = localStorage.getItem("token")
                                             axios.defaults.headers.common["Authorization"] = `Token ${token}`
-                                            const response =  await axios.put(`http://127.0.0.1:8000/api/v1/nutrition/${mealItem.id}/ingredient/${ingredient.id}/`,{amount})
+                                            const response =  await axios.put(`/nutrition/${mealItem.id}/ingredient/${ingredient.id}/`,{amount})
                                             console.log(response)
                                         }catch(error){
                                             console.log(error)
@@ -119,7 +119,7 @@ export default function Nutrition(){
                                          try{
                                              const token = localStorage.getItem("token")
                                              axios.defaults.headers.common["Authorization"] = `Token ${token}`
-                                             const response =  await axios.delete(`http://127.0.0.1:8000/api/v1/nutrition/${mealItem.id}/ingredient/${ingredient.id}/`)
+                                             const response =  await axios.delete(`/nutrition/${mealItem.id}/ingredient/${ingredient.id}/`)
                                              console.log(response)
                                             }catch(error){
                                                 console.log(error)
