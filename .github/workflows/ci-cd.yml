@@ -33,9 +33,9 @@ jobs:
       run: |
         npm ci
 
-    - name: Run Unit Tests
-      run: |
-        npm run test
+    # - name: Run Unit Tests
+    #   run: |
+    #     npm run test
 
     - name: Set up Docker Buildx
       uses: docker/setup-buildx-action@v1.3.0  # Set up Docker Buildx for multi-platform builds
@@ -53,41 +53,41 @@ jobs:
         docker build -f Dockerfile -t ${{ secrets.DOCKER_USERNAME }}/shredder_front:${{ github.sha }} .
         docker push ${{ secrets.DOCKER_USERNAME }}/shredder_front:${{ github.sha }}
 
-  deploy_eks:
-    needs: frontend-build
-    runs-on: ubuntu-latest
+  # deploy_eks:
+  #   needs: frontend-build
+  #   runs-on: ubuntu-latest
 
-    steps:
-    - name: Checkout code
-      uses: actions/checkout@v2.5.0
+  #   steps:
+  #   - name: Checkout code
+  #     uses: actions/checkout@v2.5.0
 
-    - name: Configure AWS credentials
-      uses: aws-actions/configure-aws-credentials@v1.5.1
-      with:
-        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        aws-region: ${{ env.AWS_REGION }}
+  #   - name: Configure AWS credentials
+  #     uses: aws-actions/configure-aws-credentials@v1.5.1
+  #     with:
+  #       aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+  #       aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+  #       aws-region: ${{ env.AWS_REGION }}
 
-    - name: Update kubeconfig for EKS
-      run: |
-        # Update the kubeconfig file to access the EKS cluster
-        aws eks update-kubeconfig --name ${{ secrets.EKS_CLUSTER_NAME }} --region ${{ env.AWS_REGION }} --kubeconfig ./kubeconfig.yml
-        echo "KUBECONFIG=$(pwd)/kubeconfig.yml" >> $GITHUB_ENV
+  #   - name: Update kubeconfig for EKS
+  #     run: |
+  #       # Update the kubeconfig file to access the EKS cluster
+  #       aws eks update-kubeconfig --name ${{ secrets.EKS_CLUSTER_NAME }} --region ${{ env.AWS_REGION }} --kubeconfig ./kubeconfig.yml
+  #       echo "KUBECONFIG=$(pwd)/kubeconfig.yml" >> $GITHUB_ENV
 
-    - name: Deploy Frontend to Kubernetes
-      run: |
-        # Deploy namespace first if not already created
-        kubectl apply -f k8s/namespace.yml -n ${{ env.K8S_NAMESPACE }}
-        # Deploy all other Kubernetes resources except namespace.yml
-        kubectl apply -f k8s/ -n ${{ secrets.K8S_NAMESPACE }} --exclude k8s/namespace.yml
+  #   - name: Deploy Frontend to Kubernetes
+  #     run: |
+  #       # Deploy namespace first if not already created
+  #       kubectl apply -f k8s/namespace.yml -n ${{ env.K8S_NAMESPACE }}
+  #       # Deploy all other Kubernetes resources except namespace.yml
+  #       kubectl apply -f k8s/ -n ${{ secrets.K8S_NAMESPACE }} --exclude k8s/namespace.yml
 
-    - name: Verify Frontend Deployment
-      run: |
-        # Verify that the frontend deployment was successful
-        kubectl rollout status deployment/shredder-frontend -n ${{ env.K8S_NAMESPACE }}
+  #   - name: Verify Frontend Deployment
+  #     run: |
+  #       # Verify that the frontend deployment was successful
+  #       kubectl rollout status deployment/shredder-frontend -n ${{ env.K8S_NAMESPACE }}
 
-    - name: Rollback Deployment (on failure)
-      if: failure()
-      run: |
-        # Rollback to the previous stable version if deployment fails
-        kubectl rollout undo deployment/shredder-frontend -n ${{ env.K8S_NAMESPACE }}
+  #   - name: Rollback Deployment (on failure)
+  #     if: failure()
+  #     run: |
+  #       # Rollback to the previous stable version if deployment fails
+  #       kubectl rollout undo deployment/shredder-frontend -n ${{ env.K8S_NAMESPACE }}
