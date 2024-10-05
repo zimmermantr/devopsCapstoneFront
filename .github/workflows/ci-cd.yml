@@ -1,0 +1,60 @@
+# ci-cd.yml (Front)
+name: Frontend CI/CD Pipeline
+
+on:
+  push:
+    branches: [ main ]
+
+env:
+  DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+  DOCKER_PASSWORD: ${{ secrets.DOCKERHUB_TOKEN }}
+  AWS_REGION: 'us-east-1'
+  K8S_NAMESPACE: 'shredder'
+  EKS_CLUSTER_NAME: 'your-eks-cluster'  # FILL IN WITH PROPER NAME THROUGHOUT ENTIRE CODE
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v1
+
+    - name: Login to DockerHub
+      uses: docker/login-action@v1
+      with:
+        username: ${{ env.DOCKER_USERNAME }}
+        password: ${{ env.DOCKER_PASSWORD }}
+
+    - name: Build and push frontend Docker image
+      run: |
+        docker build -t ${{ env.DOCKER_USERNAME }}/shredder_front:latest .
+        docker push ${{ env.DOCKER_USERNAME }}/shredder_front:latest
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Configure AWS credentials
+      uses: aws-actions/configure-aws-credentials@v1
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: ${{ env.AWS_REGION }}
+# REDO THIS ENTIRELY FOR FRONT END COMPONENTS
+    - name: Set up Kubeconfig
+      uses: azure/k8s-set-context@v1
+      with:
+        method: kubeconfig
+        kubeconfig: ${{ secrets.KUBECONFIG }}
+
+    - name: Deploy Frontend to Kubernetes
+      run: |
+        kubectl apply -f k8s/frontend-deployment.yml
