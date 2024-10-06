@@ -1,0 +1,93 @@
+# ci-cd.yml (Frontend)
+name: Frontend CI/CD Pipeline
+
+on:
+  push:
+    branches: [ main ]
+
+env:
+  DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+  DOCKER_PASSWORD: ${{ secrets.DOCKERHUB_TOKEN }}
+  AWS_REGION: ${{ secrets.AWS_REGION }}
+  K8S_NAMESPACE: ${{ secrets.K8S_NAMESPACE }}
+  EKS_CLUSTER_NAME: ${{ secrets.EKS_CLUSTER_NAME }}
+  # AWS_REGION: 'us-east-1' #CHANGE THESE TO SECRETS AFTER CONFIRMING THAT THEY WORK
+  # K8S_NAMESPACE: 'shredder' #CHANGE THESE TO SECRETS AFTER CONFIRMING THAT THEY WORK
+  # EKS_CLUSTER_NAME: 'shredder_cluster' #CHANGE THESE TO SECRETS AFTER CONFIRMING THAT THEY WORK
+# WHY IS THIS NOT PUSHING TO GITHUB? 
+
+jobs:
+  frontend-build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3  # Check out code from the repository
+
+    - name: Set up Node.js environment
+      uses: actions/setup-node@v3
+      with:
+        node-version: '16'
+
+    - name: Install frontend dependencies
+      run: |
+        npm ci
+
+    # - name: Run Unit Tests
+    #   run: |
+    #     npm run test
+
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v1.3.0  # Set up Docker Buildx for multi-platform builds
+
+    - name: Login to DockerHub
+      uses: docker/login-action@v1.10.0  # Log in to DockerHub to push the Docker image
+      with:
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
+
+    - name: Build and push frontend Docker image
+      run: |
+        # Multi-stage Docker build: Node.js build stage followed by Nginx serve stage
+        # "${{ github.sha }}" is used as the image tag to ensure each image is uniquely tagged with the commit hash
+        docker build -f Dockerfile -t ${{ secrets.DOCKER_USERNAME }}/shredder_front:${{ github.sha }} .
+        docker push ${{ secrets.DOCKER_USERNAME }}/shredder_front:${{ github.sha }}
+
+  # deploy_eks:
+  #   needs: frontend-build
+  #   runs-on: ubuntu-latest
+
+  #   steps:
+  #   - name: Checkout code
+  #     uses: actions/checkout@v2.5.0
+
+  #   - name: Configure AWS credentials
+  #     uses: aws-actions/configure-aws-credentials@v1.5.1
+  #     with:
+  #       aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+  #       aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+  #       aws-region: ${{ env.AWS_REGION }}
+
+  #   - name: Update kubeconfig for EKS
+  #     run: |
+  #       # Update the kubeconfig file to access the EKS cluster
+  #       aws eks update-kubeconfig --name ${{ secrets.EKS_CLUSTER_NAME }} --region ${{ env.AWS_REGION }} --kubeconfig ./kubeconfig.yml
+  #       echo "KUBECONFIG=$(pwd)/kubeconfig.yml" >> $GITHUB_ENV
+
+  #   - name: Deploy Frontend to Kubernetes
+  #     run: |
+  #       # Deploy namespace first if not already created
+  #       kubectl apply -f k8s/namespace.yml -n ${{ env.K8S_NAMESPACE }}
+  #       # Deploy all other Kubernetes resources except namespace.yml
+  #       kubectl apply -f k8s/ -n ${{ secrets.K8S_NAMESPACE }} --exclude k8s/namespace.yml
+
+  #   - name: Verify Frontend Deployment
+  #     run: |
+  #       # Verify that the frontend deployment was successful
+  #       kubectl rollout status deployment/shredder-frontend -n ${{ env.K8S_NAMESPACE }}
+
+  #   - name: Rollback Deployment (on failure)
+  #     if: failure()
+  #     run: |
+  #       # Rollback to the previous stable version if deployment fails
+  #       kubectl rollout undo deployment/shredder-frontend -n ${{ env.K8S_NAMESPACE }}
