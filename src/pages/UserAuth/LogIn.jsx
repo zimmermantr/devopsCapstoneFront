@@ -118,8 +118,6 @@ export default function LogIn() {
     
     const userLogIn = async(e) => {
         e.preventDefault();
-        console.log('email', email);
-        console.log('password', password);
         let response = await api.post("users/login/", {
             email: email,
             password: password

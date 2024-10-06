@@ -18,7 +18,6 @@ useEffect(() => {
             if(token) {
                 const headers = { Authorization: `Token ${token}`};
                 const response = await api.get(`users/`, { headers });
-                console.log(response.data)
                 setProgramData(response.data.userWorkoutPrograms)
             } else {
                 console.log("No auth token found in local storage.");
@@ -41,7 +40,6 @@ useEffect(() => {
             if(token) {
                 const headers = { Authorization: `Token ${token}`};
                 const response = await api.delete(`programs/${program_id}/`, { headers });
-                console.log(response.data)
                 setProgramData((prevPrograms) =>
                     prevPrograms.filter((program) => program.program_id.id !== program_id)
                 )

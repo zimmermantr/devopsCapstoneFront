@@ -5,7 +5,6 @@ import ExerciseCard from "./ExerciseCard";
 export default function WorkoutCard({workout}) {
     const { workouts, deleteWorkout, user, validUser } = useContext(userContext);
 
-    console.log("workout prop in WorkoutCard:", workout);
     return(
         <div>
             <div key={workout.id} className="bg-[#266902] bg-opacity-50 border-purple-200 border-2 p-5 m-5 max-w-1000 text-white flex flex-col justify-center items-center ">

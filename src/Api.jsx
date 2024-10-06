@@ -1,5 +1,6 @@
 import axios from 'axios';
 
+const nginxBaseUrl = 'http://localhost:30889/api/v1/';
 export const api = axios.create({
-    baseURL:'http://127.0.0.1:8000/api/v1/'
+    baseURL: "/api/v1/user/"
 });

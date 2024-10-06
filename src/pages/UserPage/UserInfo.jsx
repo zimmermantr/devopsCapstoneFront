@@ -135,7 +135,6 @@ export default function UserInfo () {
           setMsjkcal(hwagaMSJkcal(height, weight, age, gender, activityLevel));
           setFluids(FluidReq(age, LbsToKg(weight)));
           setLoading(false);
-          console.log(30* (weight/2.2))
         }
       }, [height, weight, age, gender, activityLevel]);
 

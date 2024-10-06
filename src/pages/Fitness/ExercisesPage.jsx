@@ -292,11 +292,6 @@ export const ExercisesPage = () => {
           },
         ].filter(Boolean);
 
-    useEffect(() => {
-      console.log(searchInput)
-    }, [searchInput])
-
-
     return(
         <div className="h-screen  w-full bg-[#000000]" style={{
             backgroundImage: `url('/shreddersGymB&P.png')`,

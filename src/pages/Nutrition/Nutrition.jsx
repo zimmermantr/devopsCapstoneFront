@@ -23,12 +23,12 @@ export default function Nutrition(){
     useEffect(()=>{
         const token = localStorage.getItem("token")
         axios.defaults.headers.common["Authorization"] = `Token ${token}`
-        axios.get("http://127.0.0.1:8000/api/v1/nutrition/").then((response)=>{
+        axios.get("/nutrition/").then((response)=>{
             setMealList(response.data)
         }).catch((error)=>{
             console.log(error)
         })
-        axios.get("http://127.0.0.1:8000/api/v1/survey/view/").then((response)=>{
+        axios.get("/survey/view/").then((response)=>{
             setWeight(Math.floor(response.data[0]['weight']/2.205))
             setHeight(Math.floor(response.data[0]['height']*2.54))
             setAge(Math.floor(response.data[0]['age']))
@@ -52,7 +52,7 @@ export default function Nutrition(){
         try{
             const token = localStorage.getItem("token")
             axios.defaults.headers.common["Authorization"] = `Token ${token}`
-            const response = await axios.post("http://127.0.0.1:8000/api/v1/nutrition/1/",{meal})
+            const response = await axios.post("/nutrition/1/",{meal})
         }catch(error){
             console.log(error)
         }
@@ -73,8 +73,7 @@ export default function Nutrition(){
                 <div className="nutrition-entry">
                     <h2 className="nutrition-page-text">Today I Ate</h2>
                     <div>
-                        <select name="" id="" onChange={(e)=>{setMeal(e.target.value)
-                        console.log(meal)}}>
+                        <select name="" id="" onChange={(e)=>{setMeal(e.target.value)}}>
                             <option value="">Pick A Meal</option>
                             <option value="Breakfast">Breakfast</option>
                             <option value="Lunch">Lunch</option>
@@ -94,8 +93,7 @@ export default function Nutrition(){
                                         try{
                                             const token = localStorage.getItem("token")
                                             axios.defaults.headers.common["Authorization"] = `Token ${token}`
-                                            const response =  await axios.delete(`http://127.0.0.1:8000/api/v1/nutrition/${mealItem.id}/`)
-                                            console.log(response)
+                                            const response =  await axios.delete(`/v1/nutrition/${mealItem.id}/`)
                                         }catch(error){
                                             console.log(error)
                                         }
@@ -108,8 +106,7 @@ export default function Nutrition(){
                                         try{
                                             const token = localStorage.getItem("token")
                                             axios.defaults.headers.common["Authorization"] = `Token ${token}`
-                                            const response =  await axios.put(`http://127.0.0.1:8000/api/v1/nutrition/${mealItem.id}/ingredient/${ingredient.id}/`,{amount})
-                                            console.log(response)
+                                            const response =  await axios.put(`/nutrition/${mealItem.id}/ingredient/${ingredient.id}/`,{amount})
                                         }catch(error){
                                             console.log(error)
                                         }
@@ -119,8 +116,7 @@ export default function Nutrition(){
                                          try{
                                              const token = localStorage.getItem("token")
                                              axios.defaults.headers.common["Authorization"] = `Token ${token}`
-                                             const response =  await axios.delete(`http://127.0.0.1:8000/api/v1/nutrition/${mealItem.id}/ingredient/${ingredient.id}/`)
-                                             console.log(response)
+                                             const response =  await axios.delete(`/nutrition/${mealItem.id}/ingredient/${ingredient.id}/`)
                                             }catch(error){
                                                 console.log(error)
                                             }
