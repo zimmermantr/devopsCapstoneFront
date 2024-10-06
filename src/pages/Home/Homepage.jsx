@@ -12,9 +12,6 @@ import { useNavigate } from "react-router-dom";
 
 export const Homepage = () => {
     const {user} = useContext(userContext)
-    useEffect(()=>{
-        console.log(user)
-      },[])
 
     const navigate = useNavigate();
 

@@ -15,9 +15,7 @@ export const LOButton = () => {
 
     const logOut = async() => {
         try{
-            console.log('logout')
             setLogout(true)
-            console.log(logout)
             let response = await api.post('users/logout/')
             if (response.status === 200){
               localStorage.removeItem('token')

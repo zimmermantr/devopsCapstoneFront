@@ -6,7 +6,6 @@ export default function NutritionEntry(props){
             const token = localStorage.getItem("token")
             axios.defaults.headers.common["Authorization"] = `Token ${token}`
             const response = await axios.post(`/nutrition/${mealItem.id}/ingredient/1/`,{ingredient})
-            console.log(response)
         }catch(error){
             console.log(error)
         }

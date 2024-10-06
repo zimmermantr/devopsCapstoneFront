@@ -109,11 +109,6 @@ const CalcPrev = ({title, text,    }) => {
     const [height, setHeight] = useState();
     const [calc, setCalc] = useState(0);
 
-
-    useEffect(()=> {
-        console.log(height)
-    }, [dropBtnTitle])
-
     const proteinEquation = () => {
         setCalc(1)
         setDropBtnTitle('Protein Requirements')

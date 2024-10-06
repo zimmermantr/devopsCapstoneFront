@@ -21,7 +21,6 @@ export default function Progress (props){
         const itemDateString = itemDate.toISOString().split('T')[0]
         if (itemDateString === todayDateString){
             meal.ingredients.map((ingredient)=>{
-                console.log(ingredient)
                 ingredient.nutrients_id.map((nutrient)=>{
                     if (nutrient['name'] == 'Protein'){
                         protein += (nutrient['measurement_id']['amount']* ingredient['amount_consumed'])
@@ -51,8 +50,6 @@ export default function Progress (props){
             // carbs conversion to calories then compare to 55% of total calories
             carbsNeeded = ((calories*0.55)/4)
         }
-        console.log("fatneeded",fatNeeded)
-        console.log("fat",fat)
         // add activity level
         if(gender ==="Male"){
             // RMR FORMULA
