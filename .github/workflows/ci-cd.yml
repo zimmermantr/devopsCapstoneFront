@@ -41,5 +41,3 @@ jobs:
         push: true
         tags: ${{ secrets.DOCKER_USERNAME }}/shredder_front:${{ github.sha }}
         platforms: linux/amd64,linux/arm64 # Build for multiple platforms (amd64 for Windows/Mac, arm64 for newer Macs)
-        build-args: |
-          VITE_RAPID_API_KEY=${{ secrets.VITE_RAPID_API_KEY }}
