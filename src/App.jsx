@@ -11,7 +11,7 @@ export const userContext = createContext();
 
 function App() {
   const apiKey = import.meta.env.VITE_NINJA_API_KEY;
-  const rapidAPIKey = import.meta.env.VITE_RAPID_API_KEY;
+  const rapidAPIKey = process.env.VITE_RAPID_API_KEY;
   const [user, setUser] = useState(null);
   const [userID, setUserID] = useState(null);
   const [workouts, setWorkouts] = useState([]);
